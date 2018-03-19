@@ -113,3 +113,8 @@ it("ss handles both second 1 and second 2", function() {
     var datetime2 = new Date(2018, 03, 19, 14, 20, 10, 123);
     expect(dateFormat(datetime2, "ss")).toBe("10");
 });
+
+it("escaping", function() {
+    var datetime = new Date(2018, 03 - 1, 1, 14, 20, 31, 123);
+    expect(dateFormat(datetime, "'yyyy': yyyy")).toBe("yyyy: 2018");
+});

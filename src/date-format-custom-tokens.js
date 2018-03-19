@@ -34,8 +34,18 @@
         ]
     };
 
+    var categories = {
+        days: "days",
+        months: "months",
+        years: "years",
+        hours: "hours",
+        minutes: "minutes",
+        seconds: "seconds",
+        milliseconds: "milliseconds",
+    };
+
     // Regexes and supporting functions are cached through closure
-    return function (date, mask, utc) {
+    return function (date, mask, utc, tokensUsed) {
         // You can't provide utc if you skip other args (use the "UTC:" mask prefix)
         if (arguments.length == 1 && Object.prototype.toString.call(date) == "[object String]" && !/\d/.test(date)) {
             mask = date;
@@ -64,42 +74,56 @@
         var s = date[_ + "Seconds"]();
         var L = date[_ + "Milliseconds"]();
         var o = utc ? 0 : date.getTimezoneOffset();
-        var flags = {
-            d:    d,
-            dd:   pad(d),
-            E:  i18n.dayNames[E],
-            EE:  i18n.dayNames[E],
-            EEE:  i18n.dayNames[E],
-            eee:  i18n.dayNames[E],
-            EEEE: i18n.dayNames[E + 7],
-            eeee: i18n.dayNames[E + 7],
-            M:    M + 1,
-            MM:   pad(M + 1),
-            MMM:  i18n.monthNames[M],
-            MMMM: i18n.monthNames[M + 12],
-            yy:   String(y).slice(2),
-            yyyy: y,
-            h:    H % 12 || 12,
-            hh:   pad(H % 12 || 12),
-            H:    H,
-            HH:   pad(H),
-            m:    m,
-            mm:   pad(m),
-            s:    s,
-            ss:   pad(s),
-            l:    pad(L, 3),
-            L:    pad(L > 99 ? Math.round(L / 10) : L),
-            t:    H < 12 ? "a"  : "p",
-            tt:   H < 12 ? "am" : "pm",
-            T:    H < 12 ? "A"  : "P",
-            TT:   H < 12 ? "AM" : "PM",
-            Z:    utc ? "UTC" : (String(date).match(timezone) || [""]).pop().replace(timezoneClip, ""),
-            o:    (o > 0 ? "-" : "+") + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
-            S:    ["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10]
+        var tokens = {
+            d:    buildToken(d, categories.days),
+            dd:   buildToken(pad(d), categories.days),
+            E:    buildToken(i18n.dayNames[E], categories.days),
+            EE:   buildToken(i18n.dayNames[E], categories.days),
+            EEE:  buildToken(i18n.dayNames[E], categories.days),
+            eee:  buildToken(i18n.dayNames[E], categories.days),
+            EEEE: buildToken(i18n.dayNames[E + 7], categories.days),
+            eeee: buildToken(i18n.dayNames[E + 7], categories.days),
+            M:    buildToken(M + 1, categories.months),
+            MM:   buildToken(pad(M + 1), categories.months),
+            MMM:  buildToken(i18n.monthNames[M], categories.months),
+            MMMM: buildToken(i18n.monthNames[M + 12], categories.months),
+            yy:   buildToken(String(y).slice(2), categories.years),
+            yyyy: buildToken(y, categories.years),
+            h:    buildToken(H % 12 || 12, categories.hours),
+            hh:   buildToken(pad(H % 12 || 12), categories.hours),
+            H:    buildToken(H, categories.hours),
+            HH:   buildToken(pad(H), categories.hours),
+            m:    buildToken(m, categories.minutes),
+            mm:   buildToken(pad(m), categories.minutes),
+            s:    buildToken(s, categories.seconds),
+            ss:   buildToken(pad(s), categories.seconds),
+            l:    buildToken(pad(L, 3), categories.milliseconds),
+            L:    buildToken(pad(L > 99 ? Math.round(L / 10) : L), categories.milliseconds),
+            t:    buildToken(H < 12 ? "a"  : "p", categories.hours),
+            tt:   buildToken(H < 12 ? "am" : "pm", categories.hours),
+            T:    buildToken(H < 12 ? "A"  : "P", categories.hours),
+            TT:   buildToken(H < 12 ? "AM" : "PM", categories.hours),
+            Z:    buildToken(
+                      utc ? "UTC" : (String(date).match(timezone) || [""]).pop().replace(timezoneClip, ""),
+                      categories.minutes),
+            o:    buildToken(
+                      (o > 0 ? "-" : "+") + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
+                      categories.minutes),
+            S:    buildToken(
+                      ["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10],
+                      categories.days),
         };
 
         return mask.replace(token, function ($0) {
-            return $0 in flags ? flags[$0] : $0.slice(1, $0.length - 1);
+            if ($0 in tokens) {
+                if (typeof tokensUsed !== "undefined") {
+                    tokensUsed[$0.category] = true;
+                }
+
+                return tokens[$0].value;
+            } else {
+                return $0.slice(1, $0.length - 1);
+            }
         });
     };
 
@@ -111,5 +135,13 @@
         };
 
         return val;
+    };
+
+
+    function buildToken(value, category) {
+        return {
+            value: value,
+            category: category
+        };
     };
 });
