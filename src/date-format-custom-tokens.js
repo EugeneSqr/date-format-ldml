@@ -7,8 +7,15 @@
  *
  * MIT license
  */
+
 (function(root, factory) {
-    root.dateFormat = factory();
+    if (typeof define === "function" && define.amd) {
+        define(factory);
+    } else if(typeof module === "object" && module.exports) {
+        module.exports = factory();
+    } else {
+        root.dateFormat = factory();
+    }
 })(this, function() {
     var token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g;
     var timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g;
