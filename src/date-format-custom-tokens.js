@@ -17,11 +17,11 @@
         root.dateFormat = factory();
     }
 })(this, function() {
-    var token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g;
+    var token = /d{1,4}|M{1,4}|yy(?:yy)?|([HhmsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g;
     var timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g;
     var timezoneClip = /[^-+\dA-Z]/g;
 
-    var defaultMask = "ddd mmm dd yyyy HH:MM:ss";
+    var defaultMask = "ddd MMM dd yyyy HH:mm:ss";
     // Internationalization strings
     var i18n = {
         dayNames: [
@@ -57,10 +57,10 @@
         var _ = utc ? "getUTC" : "get";
         var d = date[_ + "Date"]();
         var D = date[_ + "Day"]();
-        var m = date[_ + "Month"]();
+        var M = date[_ + "Month"]();
         var y = date[_ + "FullYear"]();
         var H = date[_ + "Hours"]();
-        var M = date[_ + "Minutes"]();
+        var m = date[_ + "Minutes"]();
         var s = date[_ + "Seconds"]();
         var L = date[_ + "Milliseconds"]();
         var o = utc ? 0 : date.getTimezoneOffset();
@@ -69,18 +69,18 @@
             dd:   pad(d),
             ddd:  i18n.dayNames[D],
             dddd: i18n.dayNames[D + 7],
-            m:    m + 1,
-            mm:   pad(m + 1),
-            mmm:  i18n.monthNames[m],
-            mmmm: i18n.monthNames[m + 12],
+            M:    M + 1,
+            MM:   pad(M + 1),
+            MMM:  i18n.monthNames[M],
+            MMMM: i18n.monthNames[M + 12],
             yy:   String(y).slice(2),
             yyyy: y,
             h:    H % 12 || 12,
             hh:   pad(H % 12 || 12),
             H:    H,
             HH:   pad(H),
-            M:    M,
-            MM:   pad(M),
+            m:    m,
+            mm:   pad(m),
             s:    s,
             ss:   pad(s),
             l:    pad(L, 3),
