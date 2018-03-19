@@ -1,0 +1,24 @@
+{
+  "name": "date-format-custom-tokens",
+  "version": "1.0.0",
+  "description": "A date formatting library based on Steven Levithan's Date Format 1.2.3, with extra capabilities to override date token names and report what tokens were actually used during formatting",
+  "main": "src/date-format-custom-tokens.js",
+  "scripts": {
+    "test": "node_modules/karma/bin/karma start tests/karma.conf.js"
+  },
+  "keywords": [
+    "date",
+    "time",
+    "format",
+    "replace",
+    "token"
+  ],
+  "author": "eugenesqr",
+  "license": "MIT",
+  "devDependencies": {
+    "jasmine": "^3.1.0",
+    "karma": "^2.0.0",
+    "karma-jasmine": "^1.1.1",
+    "karma-phantomjs-launcher": "^1.0.4"
+  }
+}
