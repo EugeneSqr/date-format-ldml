@@ -17,11 +17,11 @@
         root.dateFormat = factory();
     }
 })(this, function() {
-    var token = /d{1,4}|M{1,4}|yy(?:yy)?|([HhmsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g;
+    var token = /d{1,2}|e{1,4}|E{1,4}|M{1,4}|yy(?:yy)?|([HhmsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g;
     var timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g;
     var timezoneClip = /[^-+\dA-Z]/g;
 
-    var defaultMask = "ddd MMM dd yyyy HH:mm:ss";
+    var defaultMask = "E MMM dd yyyy HH:mm:ss";
     // Internationalization strings
     var i18n = {
         dayNames: [
@@ -56,7 +56,7 @@
 
         var _ = utc ? "getUTC" : "get";
         var d = date[_ + "Date"]();
-        var D = date[_ + "Day"]();
+        var E = date[_ + "Day"]();
         var M = date[_ + "Month"]();
         var y = date[_ + "FullYear"]();
         var H = date[_ + "Hours"]();
@@ -67,8 +67,12 @@
         var flags = {
             d:    d,
             dd:   pad(d),
-            ddd:  i18n.dayNames[D],
-            dddd: i18n.dayNames[D + 7],
+            E:  i18n.dayNames[E],
+            EE:  i18n.dayNames[E],
+            EEE:  i18n.dayNames[E],
+            eee:  i18n.dayNames[E],
+            EEEE: i18n.dayNames[E + 7],
+            eeee: i18n.dayNames[E + 7],
             M:    M + 1,
             MM:   pad(M + 1),
             MMM:  i18n.monthNames[M],
