@@ -7,7 +7,9 @@
  *
  * MIT license
  */
-var dateFormat = function () {
+(function(root, factory) {
+    root.dateFormat = factory();
+})(this, function() {
     var token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g;
     var timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g;
     var timezoneClip = /[^-+\dA-Z]/g;
@@ -99,4 +101,4 @@ var dateFormat = function () {
 
         return val;
     };
-}();
+});
