@@ -117,7 +117,7 @@
         return mask.replace(token, function ($0) {
             if ($0 in tokens) {
                 if (typeof tokensUsed !== "undefined") {
-                    tokensUsed[$0.category] = true;
+                    tokensUsed[tokens[$0].category] = true;
                 }
 
                 return tokens[$0].value;
@@ -136,7 +136,6 @@
 
         return val;
     };
-
 
     function buildToken(value, category) {
         return {

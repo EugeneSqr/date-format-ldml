@@ -118,3 +118,29 @@ it("escaping", function() {
     var datetime = new Date(2018, 03 - 1, 1, 14, 20, 31, 123);
     expect(dateFormat(datetime, "'yyyy': yyyy")).toBe("yyyy: 2018");
 });
+
+it("format reporting", function() {
+    var datetime = new Date(2018, 03 - 1, 1, 14, 20, 31, 123);
+    var report = {};
+    dateFormat(datetime, "yyyy MM dd HH:mm:ss - L", false, report)
+    expect(report.years).toBeTruthy();
+    expect(report.months).toBeTruthy();
+    expect(report.days).toBeTruthy();
+    expect(report.hours).toBeTruthy();
+    expect(report.minutes).toBeTruthy();
+    expect(report.seconds).toBeTruthy();
+    expect(report.milliseconds).toBeTruthy();
+});
+
+it("format partial reporting", function() {
+    var datetime = new Date(2018, 03 - 1, 1, 14, 20, 31, 123);
+    var report = {};
+    dateFormat(datetime, "MM dd mm:ss - L", false, report)
+    expect(report.years).not.toBeDefined();
+    expect(report.months).toBeTruthy();
+    expect(report.days).toBeTruthy();
+    expect(report.hours).not.toBeDefined();
+    expect(report.minutes).toBeTruthy();
+    expect(report.seconds).toBeTruthy();
+    expect(report.milliseconds).toBeTruthy();
+});
