@@ -1,8 +1,13 @@
 /*
- * Date Format Custom Tokens 1.0.0
+ * Date Format LDML 1.0.0
  * The library is based on Steven Levithan's Date Format library
  * http://stevenlevithan.com/assets/misc/date.format.js.
- * It allows to override date tokens and get extra info about what
+ *
+ * It follows unicode locale data markup language standard syntax
+ * http://www.unicode.org/reports/tr35/tr35-31/tr35-dates.html#Date_Format_Patterns
+ * although not all format tokens are supported.
+ *
+ * It can optionally provide some extra info about what
  * tokens were actually used during formatting.
  *
  * MIT license
