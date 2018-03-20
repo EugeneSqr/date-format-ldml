@@ -4,7 +4,8 @@
   "description": "A date formatting library based on Steven Levithan's Date Format 1.2.3, that follows unicode locale data markup language standard and provides some extra info about what tokens were actually used when formatting",
   "main": "src/date-format-ldml.js",
   "scripts": {
-    "test": "node_modules/karma/bin/karma start tests/karma.conf.js"
+    "test": "node_modules/karma/bin/karma start tests/karma.conf.js",
+    "build": "node_modules/uglify-js/bin/uglifyjs src/date-format-ldml.js -o ./dist/date-format.min.js"
   },
   "keywords": [
     "date",
@@ -18,6 +19,7 @@
     "jasmine": "^3.1.0",
     "karma": "^2.0.0",
     "karma-jasmine": "^1.1.1",
-    "karma-phantomjs-launcher": "^1.0.4"
+    "karma-phantomjs-launcher": "^1.0.4",
+    "uglify-js": "^3.3.16"
   }
 }
