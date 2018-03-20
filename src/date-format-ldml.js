@@ -3,7 +3,7 @@
  * The library is based on Steven Levithan's Date Format library
  * http://stevenlevithan.com/assets/misc/date.format.js.
  *
- * It follows unicode locale data markup language standard syntax
+ * It follows Unicode locale data markup language standard syntax
  * http://www.unicode.org/reports/tr35/tr35-31/tr35-dates.html#Date_Format_Patterns
  * although not all format tokens are supported.
  *
