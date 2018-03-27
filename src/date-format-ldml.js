@@ -22,7 +22,7 @@
         root.dateFormat = factory();
     }
 })(this, function() {
-    var token = /d{1,2}|e{1,4}|E{1,4}|M{1,4}|y{1,4}|([HhmsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g;
+    var token = /d{1,2}|e{1,4}|E{1,4}|M{1,4}|y{1,4}|QQQ|w{1,2}|([HhmsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g;
     var timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g;
     var timezoneClip = /[^-+\dA-Z]/g;
 
@@ -36,7 +36,8 @@
         monthNames: [
             "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
             "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
-        ]
+        ],
+        quarter: "Q",
     };
 
     var categories = {
@@ -47,6 +48,14 @@
         minutes: "minutes",
         seconds: "seconds",
         milliseconds: "milliseconds",
+    };
+
+    var ordinalDateTable = {
+        0: 0, 1: 31, 2: 59, 3: 90, 4: 120, 5: 151, 6: 181, 7: 212, 8: 243, 9: 273, 10: 304, 11: 334,
+    };
+
+    var ordinalDateLeapTable = {
+        0: 0, 1: 31, 2: 60, 3: 91, 4: 121, 5: 152, 6: 182, 7: 213, 8: 244, 9: 274, 10: 305, 11: 335,
     };
 
     // Regexes and supporting functions are cached through closure
@@ -96,6 +105,9 @@
             yy:   buildToken(String(y).slice(2), categories.years),
             yyy:  buildToken(String(y).slice(1), categories.years),
             yyyy: buildToken(y, categories.years),
+            QQQ:  buildToken(i18n.quarter + (Math.floor(M / 3) + 1), categories.months),
+            //https://en.wikipedia.org/wiki/ISO_week_date#Calculating_the_week_number_of_a_given_date
+            w:    buildToken(Math.floor((d + getOrdinalDateOffset(y, M) - (E || 7) + 10) / 7), categories.days),
             h:    buildToken(H % 12 || 12, categories.hours),
             hh:   buildToken(pad(H % 12 || 12), categories.hours),
             H:    buildToken(H, categories.hours),
@@ -133,6 +145,19 @@
             }
         });
     };
+
+
+    function isLeapYear(year) {
+        return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+    }
+
+
+    function getOrdinalDateOffset(fullYear, zeroBasedMonth) {
+        return isLeapYear(fullYear) ?
+            ordinalDateLeapTable[zeroBasedMonth] :
+            ordinalDateTable[zeroBasedMonth];
+    }
+
 
     function pad(val, len) {
         val = String(val);

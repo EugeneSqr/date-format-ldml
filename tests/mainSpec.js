@@ -26,6 +26,40 @@ it("yyyy", function() {
     expect(dateFormat(datetime, "yyyy")).toBe("2018");
 });
 
+
+it("QQQ", function() {
+    expect(dateFormat(new Date(2018, 01 - 1), "QQQ")).toBe("Q1");
+    expect(dateFormat(new Date(2018, 02 - 1), "QQQ")).toBe("Q1");
+    expect(dateFormat(new Date(2018, 03 - 1), "QQQ")).toBe("Q1");
+    expect(dateFormat(new Date(2018, 04 - 1), "QQQ")).toBe("Q2");
+    expect(dateFormat(new Date(2018, 05 - 1), "QQQ")).toBe("Q2");
+    expect(dateFormat(new Date(2018, 06 - 1), "QQQ")).toBe("Q2");
+    expect(dateFormat(new Date(2018, 07 - 1), "QQQ")).toBe("Q3");
+    expect(dateFormat(new Date(2018, 08 - 1), "QQQ")).toBe("Q3");
+    expect(dateFormat(new Date(2018, 09 - 1), "QQQ")).toBe("Q3");
+    expect(dateFormat(new Date(2018, 10 - 1), "QQQ")).toBe("Q4");
+    expect(dateFormat(new Date(2018, 11 - 1), "QQQ")).toBe("Q4");
+    expect(dateFormat(new Date(2018, 12 - 1), "QQQ")).toBe("Q4");
+});
+
+it("w", function() {
+    expect(dateFormat(new Date(2016, 01 - 1, 3), "w")).toBe("0");
+    expect(dateFormat(new Date(2016, 01 - 1, 10), "w")).toBe("1");
+    expect(dateFormat(new Date(2016, 12 - 1, 31), "w")).toBe("52");
+
+
+    expect(dateFormat(new Date(2017, 01 - 1, 1), "w")).toBe("0");
+    expect(dateFormat(new Date(2017, 01 - 1, 8), "w")).toBe("1");
+    expect(dateFormat(new Date(2017, 12 - 1, 31), "w")).toBe("52");
+
+    expect(dateFormat(new Date(2018, 01 - 1, 1), "w")).toBe("1");
+    expect(dateFormat(new Date(2018, 01 - 1, 8), "w")).toBe("2");
+    expect(dateFormat(new Date(2018, 12 - 1, 31), "w")).toBe("53");
+
+    expect(dateFormat(new Date(2019, 01 - 1, 1), "w")).toBe("1");
+    expect(dateFormat(new Date(2019, 01 - 1, 7), "w")).toBe("2");
+});
+
 it("M handles both month 1 and month 2", function() {
     var datetime1 = new Date(2018, 03 - 1, 19, 14, 20, 31, 123);
     expect(dateFormat(datetime1, "M")).toBe("3");
