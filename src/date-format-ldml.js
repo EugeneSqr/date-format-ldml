@@ -22,7 +22,7 @@
         root.dateFormat = factory();
     }
 })(this, function() {
-    var token = /d{1,2}|e{1,4}|E{1,4}|M{1,4}|yy(?:yy)?|([HhmsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g;
+    var token = /d{1,2}|e{1,4}|E{1,4}|M{1,4}|y{1,4}|([HhmsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g;
     var timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g;
     var timezoneClip = /[^-+\dA-Z]/g;
 
@@ -92,7 +92,9 @@
             MM:   buildToken(pad(M + 1), categories.months),
             MMM:  buildToken(i18n.monthNames[M], categories.months),
             MMMM: buildToken(i18n.monthNames[M + 12], categories.months),
+            y:    buildToken(y, categories.years),
             yy:   buildToken(String(y).slice(2), categories.years),
+            yyy:  buildToken(String(y).slice(1), categories.years),
             yyyy: buildToken(y, categories.years),
             h:    buildToken(H % 12 || 12, categories.hours),
             hh:   buildToken(pad(H % 12 || 12), categories.hours),

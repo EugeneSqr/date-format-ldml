@@ -5,14 +5,25 @@ it("default mask", function () {
     expect(dateFormat(datetime)).toBe("Mon Mar 19 2018 14:20:31");
 });
 
-it("Year 4", function() {
+
+it("y", function() {
     var datetime = new Date(2018, 03 - 1, 19, 14, 20, 31, 123);
-    expect(dateFormat(datetime, "yyyy")).toBe("2018");
+    expect(dateFormat(datetime, "y")).toBe("2018");
 });
 
-it("Year 2", function() {
+it("yy", function() {
     var datetime = new Date(2018, 03 - 1, 19, 14, 20, 31, 123);
     expect(dateFormat(datetime, "yy")).toBe("18");
+});
+
+it("yyy", function() {
+    var datetime = new Date(2018, 03 - 1, 19, 14, 20, 31, 123);
+    expect(dateFormat(datetime, "yyy")).toBe("018");
+});
+
+it("yyyy", function() {
+    var datetime = new Date(2018, 03 - 1, 19, 14, 20, 31, 123);
+    expect(dateFormat(datetime, "yyyy")).toBe("2018");
 });
 
 it("M handles both month 1 and month 2", function() {
