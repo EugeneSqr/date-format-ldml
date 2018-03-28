@@ -20,9 +20,6 @@
     }
 })(this, function() {
     var token = /d{1,2}|e{1,4}|E{1,4}|M{1,4}|y{1,4}|QQQ|w{1,2}|D{1,3}|a|ZZZZ|Z|([Hhms])\1?|[LlS]|"[^"]*"|'[^']*'/g;
-    var timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g;
-    var timezoneClip = /[^-+\dA-Z]/g;
-
     var defaultMask = "E MMM dd yyyy HH:mm:ss";
     // Internationalization strings
     var i18n = {
@@ -36,11 +33,9 @@
         ],
         quarter: "Q",
     };
-
     var ordinalDateTable = {
         0: 0, 1: 31, 2: 59, 3: 90, 4: 120, 5: 151, 6: 181, 7: 212, 8: 243, 9: 273, 10: 304, 11: 334,
     };
-
     var ordinalDateLeapTable = {
         0: 0, 1: 31, 2: 60, 3: 91, 4: 121, 5: 152, 6: 182, 7: 213, 8: 244, 9: 274, 10: 305, 11: 335,
     };
@@ -114,7 +109,7 @@
             L:    pad(getCentiseconds()),
             a:    getPeriod(),
             Z:    getTimeZoneOffset(),
-            ZZZZ: getTimeZone(),
+            ZZZZ: "GMT" + getTimeZoneOffset(),
             S:    getOrdinalSuffix(),
         };
 
@@ -130,12 +125,6 @@
 
         function get12Hours() {
             return H % 12 || 12;
-        }
-
-        function getTimeZone() {
-            return utc ?
-                "UTC" :
-                (String(date).match(timezone) || [""]).pop().replace(timezoneClip, "");
         }
 
         function getTimeZoneOffset() {

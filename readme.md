@@ -51,7 +51,7 @@ Initial masks were changed to stay closer to the [unicode standard](http://www.u
 | l or L   | Milliseconds. l gives 3 digits. L gives 2 digits                                                                                                                                |
 | a        | AM or PM                                                                                                                                                                        |
 | Z        | GMT/UTC timezone offset, e.g. -0500 or +0230                                                                                                                                    |
-| ZZZZ     | US timezone abbreviation, e.g. EST or MDT. With non-US time zones or in the Opera browser, the GMT/UTC offset is returned, e.g. GMT-0500                                        |
+| ZZZZ     | The long localized GMT format, e.g. GMT-0500                                                                                                                                    |
 | S        | The date's ordinal suffix (st, nd, rd, or th). Works well with d                                                                                                                |
 | '…'or"…" | Literal character sequence. Surrounding quotes are removed                                                                                                                      |
 | UTC:     | Must be the first four characters of the mask. Converts the date from local time to UTC/GMT/Zulu time before applying the mask. The "UTC:" prefix is removed                    |
