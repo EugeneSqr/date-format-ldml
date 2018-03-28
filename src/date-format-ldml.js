@@ -111,7 +111,7 @@
             s:    s,
             ss:   pad(s),
             l:    pad(L, 3),
-            L:    pad(L > 99 ? Math.round(L / 10) : L),
+            L:    pad(getCentiseconds()),
             a:    getPeriod(),
             Z:    getTimeZoneOffset(),
             ZZZZ: getTimeZone(),
@@ -163,6 +163,11 @@
 
         function getPeriod() {
             return H < 12 ? "AM" : "PM";
+        }
+
+
+        function getCentiseconds() {
+            return L > 99 ? Math.round(L / 10) : L;
         }
     };
 
