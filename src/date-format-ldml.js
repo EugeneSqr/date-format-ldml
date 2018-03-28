@@ -19,7 +19,7 @@
         root.dateFormat = factory();
     }
 })(this, function() {
-    var token = /d{1,2}|e{1,4}|E{1,4}|M{1,4}|y{1,4}|QQQ|w{1,2}|D{1,3}|([HhmsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g;
+    var token = /d{1,2}|e{1,4}|E{1,4}|M{1,4}|y{1,4}|QQQ|w{1,2}|D{1,3}|a|([Hhms])\1?|[LloSZ]|"[^"]*"|'[^']*'/g;
     var timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g;
     var timezoneClip = /[^-+\dA-Z]/g;
 
@@ -112,10 +112,7 @@
             ss:   pad(s),
             l:    pad(L, 3),
             L:    pad(L > 99 ? Math.round(L / 10) : L),
-            t:    H < 12 ? "a"  : "p",
-            tt:   H < 12 ? "am" : "pm",
-            T:    H < 12 ? "A"  : "P",
-            TT:   H < 12 ? "AM" : "PM",
+            a:    getPeriod(),
             Z:    getTimeZone(),
             o:    getTimeZoneOffset(),
             S:    getOrdinalSuffix(),
@@ -162,6 +159,10 @@
             return d + (isLeapYear ?
                 ordinalDateLeapTable[M] :
                 ordinalDateTable[M]);
+        }
+
+        function getPeriod() {
+            return H < 12 ? "AM" : "PM";
         }
     };
 

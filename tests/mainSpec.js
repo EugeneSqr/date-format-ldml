@@ -197,6 +197,11 @@ it("hh hour 12", function() {
     expect(dateFormat(datetime2, "hh")).toBe("02");
 });
 
+it("a", function() {
+    expect(dateFormat(new Date(2016, 03 - 1, 7, 1, 2, 3), "a")).toBe("AM");
+    expect(dateFormat(new Date(2016, 03 - 1, 7, 13, 2, 3), "a")).toBe("PM");
+});
+
 it("m handles both minute 1 and minute 2", function() {
     var datetime1 = new Date(2018, 03, 19, 14, 2, 31, 123);
     expect(dateFormat(datetime1, "m")).toBe("2");
