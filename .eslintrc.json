@@ -1,0 +1,20 @@
+{
+    "env": {
+        "amd": true,
+        "commonjs": true,
+        "browser": true,
+        "es6": false
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+        "complexity": [ "error", { "max": 10 } ],
+        "indent": [ "error", 4 ],
+        "linebreak-style": [ "error", "unix" ],
+        "quotes": [ "error", "double" ],
+        "semi": [ "error", "always" ],
+        "no-console": "off",
+        "indent": [ "error", 4, { "SwitchCase": 1 } ],
+        "no-trailing-spaces": [ "error", { "ignoreComments": false } ],
+        "one-var": ["error", "never"]
+    }
+}

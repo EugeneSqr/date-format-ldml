@@ -55,7 +55,9 @@
 
         // Passing date through Date applies Date.parse, if necessary
         date = date ? new Date(date) : new Date;
-        if (isNaN(date)) throw SyntaxError("invalid date");
+        if (isNaN(date)) {
+            throw SyntaxError("invalid date");
+        }
 
         mask = mask || defaultMask;
 
@@ -78,9 +80,9 @@
         var tokens = {
             d:    d,
             dd:   pad(d),
-            D:    getDayOfYear(d, y, M),
-            DD:   pad(getDayOfYear(d, y, M)),
-            DDD:  pad(getDayOfYear(d, y, M), 3),
+            D:    getDayOfYear(),
+            DD:   pad(getDayOfYear()),
+            DDD:  pad(getDayOfYear(), 3),
             E:    i18n.dayNames[E],
             EE:   i18n.dayNames[E],
             EEE:  i18n.dayNames[E],
@@ -96,10 +98,10 @@
             yyy:  String(y).slice(1),
             yyyy: y,
             QQQ:  i18n.quarter + (Math.floor(M / 3) + 1),
-            w:    getWeekOfYear(d, y, M, E),
-            ww:   pad(getWeekOfYear(d, y, M, E)),
-            h:    H % 12 || 12,
-            hh:   pad(H % 12 || 12),
+            w:    getWeekOfYear(),
+            ww:   pad(getWeekOfYear()),
+            h:    get12Hours(),
+            hh:   pad(get12Hours()),
             H:    H,
             HH:   pad(H),
             m:    m,
@@ -112,9 +114,9 @@
             tt:   H < 12 ? "am" : "pm",
             T:    H < 12 ? "A"  : "P",
             TT:   H < 12 ? "AM" : "PM",
-            Z:    utc ? "UTC" : (String(date).match(timezone) || [""]).pop().replace(timezoneClip, ""),
-            o:    (o > 0 ? "-" : "+") + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
-            S:    ["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10],
+            Z:    getTimeZone(),
+            o:    getTimeZoneOffset(),
+            S:    getOrdinalSuffix(),
         };
 
         return mask.replace(token, function ($0) {
@@ -122,29 +124,48 @@
                 tokens[$0] :
                 $0.slice(1, $0.length - 1);
         });
+
+        function get12Hours() {
+            return H % 12 || 12;
+        }
+
+        function getTimeZone() {
+            return utc ?
+                "UTC" :
+                (String(date).match(timezone) || [""]).pop().replace(timezoneClip, "");
+        }
+
+        function getTimeZoneOffset() {
+            return (o > 0 ? "-" : "+") +
+                pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4);
+        }
+
+        function getOrdinalSuffix() {
+            return ["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10];
+        }
+
+        function getWeekOfYear() {
+            //https://en.wikipedia.org/wiki/ISO_week_date#Calculating_the_week_number_of_a_given_date
+            var dayOfYear = getDayOfYear(d, y, M);
+            return Math.floor((dayOfYear - (E || 7) + 10) / 7);
+        }
+
+        function getDayOfYear() {
+            var isLeapYear = ((y % 4 == 0) && (y % 100 != 0)) ||
+                (y % 400 == 0);
+            return d + (isLeapYear ?
+                ordinalDateLeapTable[M] :
+                ordinalDateTable[M]);
+        }
     };
-
-    function getWeekOfYear(dayOfMonth, fullYear, month, dayOfWeek) {
-        //https://en.wikipedia.org/wiki/ISO_week_date#Calculating_the_week_number_of_a_given_date
-        var dayOfYear = getDayOfYear(dayOfMonth, fullYear, month);
-        return Math.floor((dayOfYear - (dayOfWeek || 7) + 10) / 7);
-    }
-
-    function getDayOfYear(dayOfMonth, fullYear, month) {
-        var isLeapYear = ((fullYear % 4 == 0) && (fullYear % 100 != 0)) ||
-            (fullYear % 400 == 0);
-        return dayOfMonth + (isLeapYear ?
-            ordinalDateLeapTable[month] :
-            ordinalDateTable[month]);
-    }
 
     function pad(val, len) {
         val = String(val);
         len = len || 2;
         while (val.length < len) {
             val = "0" + val;
-        };
+        }
 
         return val;
-    };
+    }
 });
