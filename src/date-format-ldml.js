@@ -86,8 +86,10 @@
             E:    i18n.dayNames[E],
             EE:   i18n.dayNames[E],
             EEE:  i18n.dayNames[E],
-            eee:  i18n.dayNames[E],
             EEEE: i18n.dayNames[E + 7],
+            e:    getDayOfWeek(),
+            ee:   pad(getDayOfWeek()),
+            eee:  i18n.dayNames[E],
             eeee: i18n.dayNames[E + 7],
             M:    M + 1,
             MM:   pad(M + 1),
@@ -125,6 +127,10 @@
                 $0.slice(1, $0.length - 1);
         });
 
+        function getDayOfWeek() {
+            return E || 7;
+        }
+
         function get12Hours() {
             return H % 12 || 12;
         }
@@ -147,7 +153,7 @@
         function getWeekOfYear() {
             //https://en.wikipedia.org/wiki/ISO_week_date#Calculating_the_week_number_of_a_given_date
             var dayOfYear = getDayOfYear(d, y, M);
-            return Math.floor((dayOfYear - (E || 7) + 10) / 7);
+            return Math.floor((dayOfYear - (getDayOfWeek()) + 10) / 7);
         }
 
         function getDayOfYear() {

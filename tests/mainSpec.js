@@ -106,6 +106,26 @@ it("DDD", function() {
     expect(dateFormat(new Date(2017, 12 - 1, 31), "DDD")).toBe("365");
 });
 
+it("e", function() {
+    expect(dateFormat(new Date(2016, 03 - 1, 7), "e")).toBe("1");
+    expect(dateFormat(new Date(2016, 03 - 1, 8), "e")).toBe("2");
+    expect(dateFormat(new Date(2016, 03 - 1, 9), "e")).toBe("3");
+    expect(dateFormat(new Date(2016, 03 - 1, 10), "e")).toBe("4");
+    expect(dateFormat(new Date(2016, 03 - 1, 11), "e")).toBe("5");
+    expect(dateFormat(new Date(2016, 03 - 1, 12), "e")).toBe("6");
+    expect(dateFormat(new Date(2016, 03 - 1, 13), "e")).toBe("7");
+});
+
+it("ee", function() {
+    expect(dateFormat(new Date(2016, 03 - 1, 7), "ee")).toBe("01");
+    expect(dateFormat(new Date(2016, 03 - 1, 8), "ee")).toBe("02");
+    expect(dateFormat(new Date(2016, 03 - 1, 9), "ee")).toBe("03");
+    expect(dateFormat(new Date(2016, 03 - 1, 10), "ee")).toBe("04");
+    expect(dateFormat(new Date(2016, 03 - 1, 11), "ee")).toBe("05");
+    expect(dateFormat(new Date(2016, 03 - 1, 12), "ee")).toBe("06");
+    expect(dateFormat(new Date(2016, 03 - 1, 13), "ee")).toBe("07");
+});
+
 it("M handles both month 1 and month 2", function() {
     var datetime1 = new Date(2018, 03 - 1, 19, 14, 20, 31, 123);
     expect(dateFormat(datetime1, "M")).toBe("3");
