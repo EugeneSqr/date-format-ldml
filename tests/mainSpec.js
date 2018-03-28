@@ -60,6 +60,52 @@ it("w", function() {
     expect(dateFormat(new Date(2019, 01 - 1, 7), "w")).toBe("2");
 });
 
+
+it("ww", function() {
+    expect(dateFormat(new Date(2016, 01 - 1, 3), "ww")).toBe("00");
+    expect(dateFormat(new Date(2016, 01 - 1, 10), "ww")).toBe("01");
+    expect(dateFormat(new Date(2016, 12 - 1, 31), "ww")).toBe("52");
+
+
+    expect(dateFormat(new Date(2017, 01 - 1, 1), "ww")).toBe("00");
+    expect(dateFormat(new Date(2017, 01 - 1, 8), "ww")).toBe("01");
+    expect(dateFormat(new Date(2017, 12 - 1, 31), "ww")).toBe("52");
+
+    expect(dateFormat(new Date(2018, 01 - 1, 1), "ww")).toBe("01");
+    expect(dateFormat(new Date(2018, 01 - 1, 8), "ww")).toBe("02");
+    expect(dateFormat(new Date(2018, 12 - 1, 31), "ww")).toBe("53");
+
+    expect(dateFormat(new Date(2019, 01 - 1, 1), "ww")).toBe("01");
+    expect(dateFormat(new Date(2019, 01 - 1, 7), "ww")).toBe("02");
+});
+
+it("D", function() {
+    expect(dateFormat(new Date(2016, 03 - 1, 3), "D")).toBe("63");
+    expect(dateFormat(new Date(2017, 03 - 1, 3), "D")).toBe("62");
+    expect(dateFormat(new Date(2016, 01 - 1, 3), "D")).toBe("3");
+    expect(dateFormat(new Date(2017, 01 - 1, 3), "D")).toBe("3");
+    expect(dateFormat(new Date(2016, 12 - 1, 31), "D")).toBe("366");
+    expect(dateFormat(new Date(2017, 12 - 1, 31), "D")).toBe("365");
+});
+
+it("DD", function() {
+    expect(dateFormat(new Date(2016, 03 - 1, 3), "DD")).toBe("63");
+    expect(dateFormat(new Date(2017, 03 - 1, 3), "DD")).toBe("62");
+    expect(dateFormat(new Date(2016, 01 - 1, 3), "DD")).toBe("03");
+    expect(dateFormat(new Date(2017, 01 - 1, 3), "DD")).toBe("03");
+    expect(dateFormat(new Date(2016, 12 - 1, 31), "DD")).toBe("366");
+    expect(dateFormat(new Date(2017, 12 - 1, 31), "DD")).toBe("365");
+});
+
+it("DDD", function() {
+    expect(dateFormat(new Date(2016, 03 - 1, 3), "DDD")).toBe("063");
+    expect(dateFormat(new Date(2017, 03 - 1, 3), "DDD")).toBe("062");
+    expect(dateFormat(new Date(2016, 01 - 1, 3), "DDD")).toBe("003");
+    expect(dateFormat(new Date(2017, 01 - 1, 3), "DDD")).toBe("003");
+    expect(dateFormat(new Date(2016, 12 - 1, 31), "DDD")).toBe("366");
+    expect(dateFormat(new Date(2017, 12 - 1, 31), "DDD")).toBe("365");
+});
+
 it("M handles both month 1 and month 2", function() {
     var datetime1 = new Date(2018, 03 - 1, 19, 14, 20, 31, 123);
     expect(dateFormat(datetime1, "M")).toBe("3");
@@ -162,30 +208,4 @@ it("ss handles both second 1 and second 2", function() {
 it("escaping", function() {
     var datetime = new Date(2018, 03 - 1, 1, 14, 20, 31, 123);
     expect(dateFormat(datetime, "'yyyy': yyyy")).toBe("yyyy: 2018");
-});
-
-it("format reporting", function() {
-    var datetime = new Date(2018, 03 - 1, 1, 14, 20, 31, 123);
-    var report = {};
-    dateFormat(datetime, "yyyy MM dd HH:mm:ss - L", false, report)
-    expect(report.years).toBeTruthy();
-    expect(report.months).toBeTruthy();
-    expect(report.days).toBeTruthy();
-    expect(report.hours).toBeTruthy();
-    expect(report.minutes).toBeTruthy();
-    expect(report.seconds).toBeTruthy();
-    expect(report.milliseconds).toBeTruthy();
-});
-
-it("format partial reporting", function() {
-    var datetime = new Date(2018, 03 - 1, 1, 14, 20, 31, 123);
-    var report = {};
-    dateFormat(datetime, "MM dd mm:ss - L", false, report)
-    expect(report.years).not.toBeDefined();
-    expect(report.months).toBeTruthy();
-    expect(report.days).toBeTruthy();
-    expect(report.hours).not.toBeDefined();
-    expect(report.minutes).toBeTruthy();
-    expect(report.seconds).toBeTruthy();
-    expect(report.milliseconds).toBeTruthy();
 });

@@ -1,7 +1,7 @@
 {
   "name": "date-format-ldml",
   "version": "1.0.0",
-  "description": "A date formatting library based on Steven Levithan's Date Format 1.2.3, that follows Unicode locale data markup language standard and provides some extra info about what tokens were actually used when formatting",
+  "description": "A date formatting library based on Steven Levithan's Date Format 1.2.3, that follows Unicode locale data markup language standard",
   "main": "src/date-format-ldml.js",
   "scripts": {
     "test": "node_modules/karma/bin/karma start tests/karma.conf.js",
