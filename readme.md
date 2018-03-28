@@ -13,6 +13,7 @@ console.log(dateFormat(datetime, "yyyy MM dd HH:mm:ss - L"));
 > 2018 03 01 14:20:31 - 12
 # Masks
 Initial masks were changed to stay closer to the [unicode standard](http://www.unicode.org/reports/tr35/tr35-31/tr35-dates.html#Date_Format_Patterns). Here is the table of all supported characters:
+
 | Mask     | Description                                                                                                                                                                     |
 |----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | d        | Day of the month as digits; no leading zero for single-digit days                                                                                                               |
