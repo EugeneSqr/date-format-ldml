@@ -1,5 +1,5 @@
 /*
- * Date Format LDML 2.2.0
+ * Date Format LDML 2.2.1
  * The library is based on Steven Levithan's Date Format library
  * http://stevenlevithan.com/assets/misc/date.format.js.
  *

@@ -1,6 +1,6 @@
 {
   "name": "date-format-ldml",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "A date formatting library based on Steven Levithan's Date Format 1.2.3, that attempts to stay closer to Unicode locale data markup language standard",
   "main": "src/date-format-ldml.js",
   "scripts": {
