@@ -1,5 +1,5 @@
 /*
- * Date Format LDML 1.0.0
+ * Date Format LDML 2.2.0
  * The library is based on Steven Levithan's Date Format library
  * http://stevenlevithan.com/assets/misc/date.format.js.
  *
@@ -109,7 +109,7 @@
             L:    pad(getCentiseconds()),
             a:    getPeriod(),
             Z:    getTimeZoneOffset(),
-            ZZZZ: "GMT" + getTimeZoneOffset(),
+            ZZZZ: getLongTimeZoneOffset(),
             S:    getOrdinalSuffix(),
         };
 
@@ -127,9 +127,18 @@
             return H % 12 || 12;
         }
 
+        // +03:00
         function getTimeZoneOffset() {
             return (o > 0 ? "-" : "+") +
                 pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4);
+        }
+
+        // GMT+3:00
+        function getLongTimeZoneOffset() {
+            var offset = getTimeZoneOffset();
+            return "GMT" + offset.substring(0, 1) +
+                parseInt(offset.substring(1, 3)) + ":" +
+                offset.substring(3);
         }
 
         function getOrdinalSuffix() {

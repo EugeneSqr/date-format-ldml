@@ -230,6 +230,16 @@ it("ss handles both second 1 and second 2", function() {
     expect(dateFormat(datetime2, "ss")).toBe("10");
 });
 
+it("Z", function() {
+    var datetime = new Date("Wed Aug 01 2018 15:45:42 GMT+0300 (MSK)");
+    expect(dateFormat(datetime, "Z")).toBe("+0300");
+});
+
+it("ZZZZ", function() {
+    var datetime = new Date("Wed Aug 01 2018 15:45:42 GMT+0300 (MSK)");
+    expect(dateFormat(datetime, "ZZZZ")).toBe("GMT+3:00");
+});
+
 it("escaping", function() {
     var datetime = new Date(2018, 03 - 1, 1, 14, 20, 31, 123);
     expect(dateFormat(datetime, "'yyyy': yyyy")).toBe("yyyy: 2018");
